@@ -1,3 +1,5 @@
+// I used defer in the HTML to render JS after HTML content is loaded
+
 
 /* 
 1. on page load, fetches the images using the url 
@@ -56,3 +58,14 @@ function addList(dogs){
     list.appendChild(listItem)
  }
 }
+
+// Once all of the breeds are rendered in the <ul>, add JavaScript so that, when the user clicks on any one of the <li>s, the font color of that <li> changes. 
+//This can be a color of your choosing.
+
+
+const dogList = document.getElementById("dog-breeds")
+dogList.addEventListener("click", function (e){
+    if(e.target) {
+        e.target.style.color = 'blue' 
+    }
+})
