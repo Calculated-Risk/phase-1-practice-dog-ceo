@@ -8,21 +8,19 @@
 */
 
 
-
-
 //2. parses the response as JSON
 
-function fetchData(){
+function fetchDogImgData(){
 fetch( "https://dog.ceo/api/breeds/image/random/4")
 .then((response) => response.json())
-.then((data) => addDom(data.message))
+.then((data) => addDogImgToDom(data.message))
 }
-fetchData()
+fetchDogImgData()
 
 
 //3. adds image elements to the DOM for each 🤔 image in the array
 
-function addDom(data){
+function addDogImgToDom(data){
     for (let elements of data){
      const dogImageCont = document.getElementById("dog-image-container")   
      const imageEle = document.createElement('img');
@@ -42,16 +40,23 @@ After the first challenge is completed, add JavaScript that:
 on page load, fetches all the dog breeds using the url above ⬆️
 adds the breeds to the page in the <ul> provided in index.html
 */
+let dogArray = [];
 
-function fetchDataAll(){
+
+function fetchDogList(){
     fetch("https://dog.ceo/api/breeds/list/all")
     .then((response) => response.json())
-    .then((data) => addList(data.message))
+    .then((data) =>{
+        addBreedsToList(Object.keys(data.message))
+        dogArray = data.message
+    }) 
     }
-fetchDataAll()
+fetchDogList()
 
-function addList(dogs){
- for (let dog in dogs){
+
+function addBreedsToList(dogs){
+    
+ for (let dog of dogs){
     const list = document.getElementById("dog-breeds");
     const listItem = document.createElement("li");
     listItem.innerHTML = dog
@@ -69,3 +74,20 @@ dogList.addEventListener("click", function (e){
         e.target.style.color = 'blue' 
     }
 })
+
+//challenge 4 
+
+document.addEventListener('change', events => {
+    console.log(events.target.value)
+    let filteredDogs = Object.keys(dogArray).filter(breed => breed.startsWith(events.target.value))
+    console.log(filteredDogs)
+    const list = document.getElementById("dog-breeds");
+    removeAllChildren(list)
+    addBreedsToList(filteredDogs)
+})
+
+function removeAllChildren(element){
+    while(element.firstChild){
+        element.removeChild(element.firstChild)
+    }
+}
